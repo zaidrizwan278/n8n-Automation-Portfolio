@@ -1,0 +1,325 @@
+{
+  "name": "LinkedIn Post Generator",
+  "nodes": [
+    {
+      "parameters": {
+        "formTitle": "Post Creater",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "Post Topic",
+              "placeholder": "\"what is the topic of your post\"",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Target Audience",
+              "placeholder": "\"what will be your target audience",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Tone/Style",
+              "placeholder": "\"what will be your tone and style of your post\"",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Length Preference",
+              "requiredField": true
+            }
+          ]
+        },
+        "options": {
+          "appendAttribution": false,
+          "buttonLabel": "Submit",
+          "ignoreBots": true,
+          "useWorkflowTimezone": true
+        }
+      },
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.3,
+      "position": [
+        0,
+        0
+      ],
+      "id": "ID",
+      "name": "On form submission",
+      "webhookId": "ID"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-4o-mini",
+          "mode": "list",
+          "cachedResultName": "gpt-4o-mini"
+        },
+        "builtInTools": {},
+        "options": {
+          "frequencyPenalty": 0.7,
+          "textFormat": {
+            "textOptions": {
+              "type": "json_schema"
+            }
+          },
+          "presencePenalty": 0.7,
+          "temperature": 0.7,
+          "timeout": 60000,
+          "maxRetries": 2
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.3,
+      "position": [
+        232,
+        224
+      ],
+      "id": "ID",
+      "name": "OpenAI Chat Model",
+      "credentials": {
+        "openAiApi": {
+          "id": "ID",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Topic: {{ $json['Post Topic'] }}\nTarget Audience: {{ $json['Target Audience'] }}\nTone/Style:{{ $json['Tone/Style'] }}\nLength Preference:{{ $json['Length Preference'] }}",
+        "options": {
+          "systemMessage": "You are a research agent.\n\nYour task:\n- Perform EXACTLY ONE Tavily search for the given topic.\n- Extract only the most important information (3–5 key facts, stats, or insights).\n- Prefer recent and credible sources.\n- Keep the output concise and factual.\n\nRules:\n- Use the Tavily tool only once.\n- Do NOT refine, repeat, or perform follow-up searches.\n- Do NOT analyze or write content beyond the research.\n- Do NOT ask questions.\n- STOP immediately after returning the results.\n\nOutput format:\n- Bullet points\n- Include brief source attribution (e.g., Source: McKinsey, 2024)\n",
+          "returnIntermediateSteps": true,
+          "enableStreaming": false
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3,
+      "position": [
+        224,
+        0
+      ],
+      "id": "ID",
+      "name": "Research Agent"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Linkedin Post: {{ $json.output }}",
+        "options": {
+          "systemMessage": "## Overview\nYou are an AI agent specialized in generating image prompts based on research output.\n\n## Objectives\n- Use ONLY the research output provided by the Research Agent.\n- Transform the research insights into ONE clear and effective image prompt.\n- Create a prompt suitable for AI image generation tools (text-to-image).\n\n## Rules\n- Do NOT perform research.\n- Do NOT call any external tools.\n- Do NOT ask questions.\n- Do NOT generate multiple prompts or variations.\n- Do NOT explain reasoning or provide analysis.\n- STOP immediately after generating the image prompt.\n\n## Image Prompt Guidelines\n- Describe the subject, environment, visual style, and mood clearly.\n- Ensure the image visually represents the key insights from the research.\n- Use a professional, clean, and modern visual style.\n- Avoid text-heavy designs unless explicitly required.\n- No blank placeholders (e.g., “insert text here”).\n\n## Output Instructions\n- Output ONLY the final image prompt.\n- Do NOT use quotation marks.\n- Do NOT add explanations, notes, or extra text.\n- The output must be a single paragraph.\n\n## Style Guidance (Optional but Recommended)\n- Corporate, tech, or educational visual tone.\n- Use clean layouts, subtle gradients, modern UI elements, and minimalistic design.\n- Mention composition or perspective if helpful (e.g., isometric, wide-angle, flat design).\n- Guide AI tools clearly to produce high-quality visuals.\n"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3,
+      "position": [
+        576,
+        0
+      ],
+      "id": "ID",
+      "name": "Image Agent"
+    },
+    {
+      "parameters": {
+        "operation": "toBinary",
+        "sourceProperty": "data[0].b64_json",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.convertToFile",
+      "typeVersion": 1.1,
+      "position": [
+        1152,
+        0
+      ],
+      "id": "ID",
+      "name": "Convert to File"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "Tavily Api search",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer API KEY"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"query\": \"Venezuella War\",\n  \"search_depth\": \"basic\",\n  \"chunks_per_source\": 3,\n  \"max_results\": 1,\n  \"topic\": \"general\",\n  \"time_range\": null,\n  \"start_date\": \"2025-02-09\",\n  \"end_date\": \"2025-12-29\",\n  \"include_answer\": false,\n  \"include_raw_content\": false,\n  \"include_images\": false,\n  \"include_image_descriptions\": false,\n  \"include_favicon\": false,\n  \"include_domains\": [],\n  \"exclude_domains\": [],\n  \"country\": null,\n  \"auto_parameters\":false,\n  \"include_usage\": false\n}",
+        "options": {
+          "timeout": 10000
+        }
+      },
+      "type": "n8n-nodes-base.httpRequestTool",
+      "typeVersion": 4.3,
+      "position": [
+        360,
+        224
+      ],
+      "id": "ID",
+      "name": "Tavily"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "Open AI url",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer API KEY"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "model",
+              "value": "gpt-image-1.5"
+            },
+            {
+              "name": "prompt",
+              "value": "={{ $json.output }}"
+            },
+            {
+              "name": "size",
+              "value": "1024x1024"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        928,
+        0
+      ],
+      "id": "ID",
+      "name": "Image Generator"
+    },
+    {
+      "parameters": {
+        "text": "={{ $('Research Agent').item.json.output }}",
+        "shareMediaCategory": "IMAGE",
+        "additionalFields": {
+          "visibility": "PUBLIC"
+        }
+      },
+      "type": "n8n-nodes-base.linkedIn",
+      "typeVersion": 1,
+      "position": [
+        1376,
+        0
+      ],
+      "id": "ID",
+      "name": "Create a post",
+      "credentials": {
+        "linkedInOAuth2Api": {
+          "id": "ID",
+          "name": "LinkedIn account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "On form submission": {
+      "main": [
+        [
+          {
+            "node": "Research Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Image Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          },
+          {
+            "node": "Research Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Research Agent": {
+      "main": [
+        [
+          {
+            "node": "Image Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Image Agent": {
+      "main": [
+        [
+          {
+            "node": "Image Generator",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Tavily": {
+      "ai_tool": [
+        [
+          {
+            "node": "Research Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Image Generator": {
+      "main": [
+        [
+          {
+            "node": "Convert to File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Convert to File": {
+      "main": [
+        [
+          {
+            "node": "Create a post",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "ID",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "ID"
+  },
+  "id": "ID",
+  "tags": []
+}
