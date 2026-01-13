@@ -17,24 +17,24 @@
         -1312,
         -672
       ],
-      "id": "8dd647cc-15a7-4010-9dce-00329d06c049",
+      "id": "ID",
       "name": "Schedule Trigger"
     },
     {
       "parameters": {
         "documentId": {
           "__rl": true,
-          "value": "1MLjuDFJ7a0v5sLpQQ7XJBH7iUu0gQJSBZPHK9_TvsA8",
+          "value": "ID",
           "mode": "list",
           "cachedResultName": "AI Video Ideas",
-          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1MLjuDFJ7a0v5sLpQQ7XJBH7iUu0gQJSBZPHK9_TvsA8/edit?usp=drivesdk"
+          "cachedResultUrl": "Google Sheets"
         },
         "sheetName": {
           "__rl": true,
           "value": "gid=0",
           "mode": "list",
           "cachedResultName": "Sheet1",
-          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1MLjuDFJ7a0v5sLpQQ7XJBH7iUu0gQJSBZPHK9_TvsA8/edit#gid=0"
+          "cachedResultUrl": "Google Sheet"
         },
         "filtersUI": {
           "values": [
@@ -54,11 +54,11 @@
         -1088,
         -672
       ],
-      "id": "e5b69a34-623e-481a-ae7c-bce626e77162",
+      "id": "ID",
       "name": "Get row(s) in sheet",
       "credentials": {
         "googleSheetsOAuth2Api": {
-          "id": "ki6c6A07kF0aUKQe",
+          "id": "ID",
           "name": "Google Sheets account 2"
         }
       }
@@ -82,11 +82,11 @@
         -792,
         -448
       ],
-      "id": "e2719d6d-5313-49bf-b473-7d661b6e6664",
+      "id": "ID",
       "name": "OpenAI Chat Model",
       "credentials": {
         "openAiApi": {
-          "id": "0njJdKZHbMLlNGKt",
+          "id": "ID",
           "name": "OpenAi account"
         }
       }
@@ -105,7 +105,7 @@
         -864,
         -672
       ],
-      "id": "e486efbc-aeee-4e29-bba0-006c1baa557f",
+      "id": "ID",
       "name": "Prompt Agent"
     },
     {
@@ -118,9 +118,9 @@
         -448,
         -512
       ],
-      "id": "8e7421eb-1731-4658-a9fb-f9ceeae72790",
+      "id": "ID",
       "name": "Wait",
-      "webhookId": "dcd6b5a3-770d-4083-8712-f2ddea07e6a2"
+      "webhookId": "Webhook ID"
     },
     {
       "parameters": {
@@ -130,7 +130,7 @@
           "parameters": [
             {
               "name": "Authorization",
-              "value": "Bearer key_f8bde81507631cfda64bd5d73965438b416da7cd5fcee418e3eb355e2e277d22977cf6417b2ca1b975468c5827e770cac07b241ef65931abab24cf63ac9bf5ea"
+              "value": "API KEY"
             }
           ]
         },
@@ -142,7 +142,7 @@
         -384,
         -352
       ],
-      "id": "d42b9269-228f-4727-bfce-180d4fc0d8bd",
+      "id": "ID",
       "name": "Get video"
     },
     {
@@ -159,11 +159,11 @@
         -112,
         -656
       ],
-      "id": "671a34ae-addc-4fc3-a762-c534a4d10363",
+      "id": "ID",
       "name": "Upload a video",
       "credentials": {
         "youTubeOAuth2Api": {
-          "id": "s9Mdr5MXtxABuZU2",
+          "id": "ID",
           "name": "YouTube account"
         }
       }
@@ -179,7 +179,7 @@
         -304,
         -656
       ],
-      "id": "36ddcb74-fb84-4e7a-a18e-de110cf24c75",
+      "id": "ID",
       "name": "Download Video"
     },
     {
@@ -187,17 +187,17 @@
         "operation": "update",
         "documentId": {
           "__rl": true,
-          "value": "1MLjuDFJ7a0v5sLpQQ7XJBH7iUu0gQJSBZPHK9_TvsA8",
+          "value": "ID",
           "mode": "list",
           "cachedResultName": "AI Video Ideas",
-          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1MLjuDFJ7a0v5sLpQQ7XJBH7iUu0gQJSBZPHK9_TvsA8/edit?usp=drivesdk"
+          "cachedResultUrl": "Google Sheets"
         },
         "sheetName": {
           "__rl": true,
           "value": "gid=0",
           "mode": "list",
           "cachedResultName": "Sheet1",
-          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1MLjuDFJ7a0v5sLpQQ7XJBH7iUu0gQJSBZPHK9_TvsA8/edit#gid=0"
+          "cachedResultUrl": "Google Sheets"
         },
         "columns": {
           "mappingMode": "defineBelow",
@@ -245,11 +245,11 @@
         96,
         -656
       ],
-      "id": "5b4b2a3d-8375-4c16-8e3f-7f171eff5b5c",
+      "id": "ID",
       "name": "Update row in sheet",
       "credentials": {
         "googleSheetsOAuth2Api": {
-          "id": "ki6c6A07kF0aUKQe",
+          "id": "ID",
           "name": "Google Sheets account 2"
         }
       }
@@ -286,7 +286,7 @@
         -512,
         -672
       ],
-      "id": "42871be0-92b8-430e-be88-649fc677037d",
+      "id": "ID",
       "name": "Generate Video"
     }
   ],
@@ -397,11 +397,11 @@
     "executionOrder": "v1",
     "availableInMCP": false
   },
-  "versionId": "0733c96a-819e-43de-8783-bbffe3fec650",
+  "versionId": "ID",
   "meta": {
     "templateCredsSetupCompleted": true,
-    "instanceId": "1912e1ac03de9027fbcfe5dae9f36ccc280168c78f619d5d5a2889d4ea5397eb"
+    "instanceId": "ID"
   },
-  "id": "_xUBGphGKBoItf2I6aj5b",
+  "id": "ID",
   "tags": []
 }
