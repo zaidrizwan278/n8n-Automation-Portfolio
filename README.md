@@ -1,7 +1,5 @@
 # 🤖 n8n AI Automation Portfolio
 
-A curated collection of **real-world n8n automation workflows** that demonstrate how AI Agents, RAG (Retrieval-Augmented Generation), and API integrations can automate business operations end-to-end.
-
 This portfolio focuses on **practical automations** used in content creation, email management, knowledge systems, and internal business tools.
 
 ---
@@ -11,8 +9,8 @@ This portfolio focuses on **practical automations** used in content creation, em
 * Designing **production-ready n8n workflows**
 * Building **AI agents** for decision-making and automation
 * Implementing **RAG systems** using vector databases
-* Automating **email, inventory, and content workflows**
-* Integrating **OpenAI, Pinecone, Gmail, Google Sheets, OneDrive, and LinkedIn APIs**
+* Automating **email, inventory, content, and video workflows**
+* Integrating **OpenAI, Pinecone, Gmail, Google Sheets, OneDrive, LinkedIn, RunwayML, and YouTube APIs**
 
 ---
 
@@ -145,6 +143,34 @@ An end-to-end content automation workflow for LinkedIn.
 
 ---
 
+### 6. AI-Generated Video Automation (Idea → Video → YouTube 🎥) **(NEW)**
+
+A fully automated pipeline that turns video ideas into AI-generated videos and uploads them to YouTube.
+
+**Workflow**
+
+* **AI Generated Videos.json**
+
+**Function**
+
+* Reads video ideas from Google Sheets
+* Converts ideas into cinematic AI prompts
+* Generates videos using AI
+* Uploads videos automatically to YouTube
+* Updates video status back in Google Sheets
+
+**Features**
+
+* Scheduled execution (hands-free automation)
+* AI Agent generates **high-density cinematic prompts**
+* Video generation using **RunwayML**
+* Automatic YouTube uploads
+* Status tracking via Google Sheets (e.g., In Progress → Published)
+
+**Tech Stack:** OpenAI, RunwayML, Google Sheets, YouTube API, n8n AI Agents
+
+---
+
 ## 🛠️ Setup & Usage
 
 ### Import Workflows
@@ -162,6 +188,8 @@ You must configure your own credentials for:
 * Google Cloud (Gmail & Google Sheets)
 * Microsoft OneDrive (RAG ingestion)
 * LinkedIn API (LinkedIn Post Generator)
+* RunwayML API (Video Generation)
+* YouTube API (Video Uploads)
 
 > ⚠️ Credentials are **not included** for security reasons.
 
@@ -171,6 +199,7 @@ You must configure your own credentials for:
 
 * All workflows are modular and customizable
 * Designed for real-world business and creator use cases
+* Supports **content, email, and video automation**
 * Can be extended with additional tools, triggers, and AI agents
 
 ---
