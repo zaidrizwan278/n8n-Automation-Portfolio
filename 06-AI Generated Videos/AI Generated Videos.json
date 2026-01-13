@@ -1,0 +1,407 @@
+{
+  "name": "AI Generated Videos",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "hours"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.3,
+      "position": [
+        -1312,
+        -672
+      ],
+      "id": "8dd647cc-15a7-4010-9dce-00329d06c049",
+      "name": "Schedule Trigger"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1MLjuDFJ7a0v5sLpQQ7XJBH7iUu0gQJSBZPHK9_TvsA8",
+          "mode": "list",
+          "cachedResultName": "AI Video Ideas",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1MLjuDFJ7a0v5sLpQQ7XJBH7iUu0gQJSBZPHK9_TvsA8/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1MLjuDFJ7a0v5sLpQQ7XJBH7iUu0gQJSBZPHK9_TvsA8/edit#gid=0"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "Status",
+              "lookupValue": "In Progress"
+            }
+          ]
+        },
+        "options": {
+          "returnFirstMatch": true
+        }
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        -1088,
+        -672
+      ],
+      "id": "e5b69a34-623e-481a-ae7c-bce626e77162",
+      "name": "Get row(s) in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "ki6c6A07kF0aUKQe",
+          "name": "Google Sheets account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-4o-mini",
+          "mode": "list",
+          "cachedResultName": "gpt-4o-mini"
+        },
+        "builtInTools": {},
+        "options": {
+          "temperature": 0.7
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.3,
+      "position": [
+        -792,
+        -448
+      ],
+      "id": "e2719d6d-5313-49bf-b473-7d661b6e6664",
+      "name": "OpenAI Chat Model",
+      "credentials": {
+        "openAiApi": {
+          "id": "0njJdKZHbMLlNGKt",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Video Idea:  {{ $json.Ideas }}",
+        "options": {
+          "systemMessage": "** System Prompt for AI Agent: Veo 3.1 Prompt Generator\n\nYou are an expert prompt engineer trained specifically for **Google Veo 3.1**.\nYour task is to take a short video idea and turn it into a **concise**, **cinematic**, and **hyper-realistic** prompt.\n\n*** CRITICAL CONSTRAINT\n**The final output must be strictly under 1000 characters.**\n\n*** Output Requirements\nGenerate a single, high-density paragraph that integrates:\n1. **Setting & Atmosphere** (Lighting, environment).\n2. **Visual Details** (Textures, specific objects, motion).\n3. **Cinematic Tech** (Camera angles, fps, lens type).\n\n*** Rules\n- Prioritize **information density** over length.\n- Use strong, descriptive keywords; remove filler words.\n- Ensure the tone is evocative and visual.\n- **Do not** explain your prompt or include reasoning.\n- Only output the final **Veo 3.1 prompt**.\n\n*** Example Input\nIdea: \"ASMR cutting kiwi\"\n\n*** Example Output\nVeo 3.1 Prompt: Extreme close-up of a ripe kiwi on a wooden board. Ultra HD textures showing fuzzy skin and glistening water droplets. Natural window light illuminates translucent green flesh as a knife slices through with a crisp sound. Soft focus background, macro lens, shallow depth of field, 120 fps slow-motion to emphasize juice movement. Visually satisfying and hyper-realistic."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        -864,
+        -672
+      ],
+      "id": "e486efbc-aeee-4e29-bba0-006c1baa557f",
+      "name": "Prompt Agent"
+    },
+    {
+      "parameters": {
+        "unit": "minutes"
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        -448,
+        -512
+      ],
+      "id": "8e7421eb-1731-4658-a9fb-f9ceeae72790",
+      "name": "Wait",
+      "webhookId": "dcd6b5a3-770d-4083-8712-f2ddea07e6a2"
+    },
+    {
+      "parameters": {
+        "url": "=https://api.runwayml.com/v1/generations/{{ $('Generate Video').item.json.id }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer key_f8bde81507631cfda64bd5d73965438b416da7cd5fcee418e3eb355e2e277d22977cf6417b2ca1b975468c5827e770cac07b241ef65931abab24cf63ac9bf5ea"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        -384,
+        -352
+      ],
+      "id": "d42b9269-228f-4727-bfce-180d4fc0d8bd",
+      "name": "Get video"
+    },
+    {
+      "parameters": {
+        "resource": "video",
+        "operation": "upload",
+        "title": "={{ $('Get row(s) in sheet').item.json.Ideas }}",
+        "regionCode": "PK",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.youTube",
+      "typeVersion": 1,
+      "position": [
+        -112,
+        -656
+      ],
+      "id": "671a34ae-addc-4fc3-a762-c534a4d10363",
+      "name": "Upload a video",
+      "credentials": {
+        "youTubeOAuth2Api": {
+          "id": "s9Mdr5MXtxABuZU2",
+          "name": "YouTube account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "http",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        -304,
+        -656
+      ],
+      "id": "36ddcb74-fb84-4e7a-a18e-de110cf24c75",
+      "name": "Download Video"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "1MLjuDFJ7a0v5sLpQQ7XJBH7iUu0gQJSBZPHK9_TvsA8",
+          "mode": "list",
+          "cachedResultName": "AI Video Ideas",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1MLjuDFJ7a0v5sLpQQ7XJBH7iUu0gQJSBZPHK9_TvsA8/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1MLjuDFJ7a0v5sLpQQ7XJBH7iUu0gQJSBZPHK9_TvsA8/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {},
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Ideas",
+              "displayName": "Ideas",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Status",
+              "displayName": "Status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "row_number",
+              "displayName": "row_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "readOnly": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        96,
+        -656
+      ],
+      "id": "5b4b2a3d-8375-4c16-8e3f-7f171eff5b5c",
+      "name": "Update row in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "ki6c6A07kF0aUKQe",
+          "name": "Google Sheets account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.dev.runwayml.com/v1/image_to_video",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer {{ YOUR API KEY }}"
+            },
+            {
+              "name": "X-Runway-Version",
+              "value": "2024-11-06"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "{\n  \"promptText\": \"string\",\n  \"promptImage\": \"https://example.com/image.jpg\",\n  \"seed\": 4294967295,\n  \"ratio\": \"1280:720\",\n  \"duration\": 2,\n  \"contentModeration\": {\n    \"publicFigureThreshold\": \"auto\"\n  },\n  \"model\": \"gen4_turbo\"\n}",
+        "options": {
+          "redirect": {
+            "redirect": {}
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        -512,
+        -672
+      ],
+      "id": "42871be0-92b8-430e-be88-649fc677037d",
+      "name": "Generate Video"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Get row(s) in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get row(s) in sheet": {
+      "main": [
+        [
+          {
+            "node": "Prompt Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Prompt Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prompt Agent": {
+      "main": [
+        [
+          {
+            "node": "Generate Video",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait": {
+      "main": [
+        [
+          {
+            "node": "Get video",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get video": {
+      "main": [
+        [
+          {
+            "node": "Download Video",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Download Video": {
+      "main": [
+        [
+          {
+            "node": "Upload a video",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Upload a video": {
+      "main": [
+        [
+          {
+            "node": "Update row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Generate Video": {
+      "main": [
+        [
+          {
+            "node": "Wait",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "availableInMCP": false
+  },
+  "versionId": "0733c96a-819e-43de-8783-bbffe3fec650",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "1912e1ac03de9027fbcfe5dae9f36ccc280168c78f619d5d5a2889d4ea5397eb"
+  },
+  "id": "_xUBGphGKBoItf2I6aj5b",
+  "tags": []
+}
