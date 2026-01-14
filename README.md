@@ -1,6 +1,6 @@
-# 🤖 n8n AI Automation Portfolio
+ 🤖 n8n AI Automation Portfolio
 
-This portfolio focuses on **practical automations** used in content creation, email management, knowledge systems, and internal business tools.
+This portfolio focuses on **practical automations** used in content creation, email management, knowledge systems, browser automation, and internal business tools.
 
 ---
 
@@ -9,8 +9,8 @@ This portfolio focuses on **practical automations** used in content creation, em
 * Designing **production-ready n8n workflows**
 * Building **AI agents** for decision-making and automation
 * Implementing **RAG systems** using vector databases
-* Automating **email, inventory, content, and video workflows**
-* Integrating **OpenAI, Pinecone, Gmail, Google Sheets, OneDrive, LinkedIn, RunwayML, and YouTube APIs**
+* Automating **email, inventory, content, browser, and video workflows**
+* Integrating **OpenAI, Pinecone, Gmail, Google Sheets, OneDrive, LinkedIn, RunwayML, YouTube, and Airtop APIs**
 
 ---
 
@@ -143,7 +143,7 @@ An end-to-end content automation workflow for LinkedIn.
 
 ---
 
-### 6. AI-Generated Video Automation (Idea → Video → YouTube 🎥) **(NEW)**
+### 6. AI-Generated Video Automation (Idea → Video → YouTube 🎥)
 
 A fully automated pipeline that turns video ideas into AI-generated videos and uploads them to YouTube.
 
@@ -171,6 +171,66 @@ A fully automated pipeline that turns video ideas into AI-generated videos and u
 
 ---
 
+### 7. AI Browser Automation & Web Research Agent 🌐🧠 **(NEW)**
+
+An advanced AI-powered browser automation system that can **navigate websites, interact with UI elements, extract data, and answer user queries in real time**.
+
+This project is split into **two coordinated workflows**.
+
+---
+
+#### A. Browser Session Manager
+
+**Workflow**
+
+* **Browser.json**
+
+**Function**
+
+* Creates and manages live browser sessions
+* Opens real browser windows with visual feedback
+* Designed to be triggered by other workflows
+
+**Features**
+
+* Uses **Airtop** to launch real browser sessions
+* Supports CAPTCHA solving
+* Live browser window rendering (1280×720)
+* Persistent browser profiles
+* Designed for multi-workflow orchestration
+
+**Tech Stack:** Airtop API, n8n
+
+---
+
+#### B. AI Web Search & Interaction Agent
+
+**Workflow**
+
+* **Searcher.json**
+
+**Function**
+
+* Allows users to chat with an AI agent that can browse the web, search, click, type, extract information, and respond intelligently.
+
+**Features**
+
+* Chat-triggered AI agent
+* Dynamic browser creation via workflow tools
+* Can:
+
+  * Load URLs
+  * Type into input fields
+  * Click buttons or links
+  * Extract structured data from pages
+* Uses memory to maintain conversation context
+* Terminates browser sessions automatically after task completion
+
+**Tech Stack:**
+OpenAI (GPT-4o-mini), Airtop API, LangChain Agents & Memory, n8n
+
+---
+
 ## 🛠️ Setup & Usage
 
 ### Import Workflows
@@ -190,6 +250,7 @@ You must configure your own credentials for:
 * LinkedIn API (LinkedIn Post Generator)
 * RunwayML API (Video Generation)
 * YouTube API (Video Uploads)
+* Airtop API (Browser Automation)
 
 > ⚠️ Credentials are **not included** for security reasons.
 
@@ -198,9 +259,9 @@ You must configure your own credentials for:
 ## 📌 Notes
 
 * All workflows are modular and customizable
-* Designed for real-world business and creator use cases
-* Supports **content, email, and video automation**
-* Can be extended with additional tools, triggers, and AI agents
+* Designed for **real-world automation use cases**
+* Supports **AI agents, browser automation, content pipelines, and video publishing**
+* Can be extended with additional tools, triggers, and agent logic
 
 ---
 
