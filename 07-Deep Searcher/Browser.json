@@ -1,0 +1,99 @@
+{
+  "name": "Browser",
+  "nodes": [
+    {
+      "parameters": {
+        "profileName": "n8ntest",
+        "saveProfileOnTermination": true,
+        "record": true,
+        "additionalFields": {
+          "solveCaptcha": true
+        }
+      },
+      "type": "n8n-nodes-base.airtop",
+      "typeVersion": 1,
+      "position": [ 512, 304 ],
+      "name": "Create a session",
+      "credentials": {
+        "airtopApi": {
+          "name": "Airtop account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "window",
+        "url": "={{ $('When Executed by Another Workflow').item.json.Url }}",
+        "getLiveView": true,
+        "includeNavigationBar": true,
+        "screenResolution": "1280x720",
+        "disableResize": true,
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.airtop",
+      "typeVersion": 1,
+      "position": [ 736, 304 ],
+      "name": "Create a window",
+      "credentials": {
+        "airtopApi": {
+          "name": "Airtop account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "workflowInputs": {
+          "values": [
+            { "name": "url" },
+            { "name": "profile_name" }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.1,
+      "position": [ 288, 304 ],
+      "name": "When Executed by Another Workflow"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Create a session": {
+      "main": [
+        [
+          {
+            "node": "Create a window",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create a window": {
+      "main": [ [] ]
+    },
+    "When Executed by Another Workflow": {
+      "main": [
+        [
+          {
+            "node": "Create a session",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "availableInMCP": false,
+    "timeSavedMode": "dynamic",
+    "timezone": "Asia/Karachi",
+    "saveExecutionProgress": true,
+    "callerPolicy": "workflowsFromSameOwner"
+  },
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "tags": []
+}

@@ -1,0 +1,186 @@
+{
+  "name": "Searcher",
+  "nodes": [
+    {
+      "parameters": {
+        "options": {
+          "allowFileUploads": false,
+          "responseMode": "lastNode"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.4,
+      "position": [ -1184, -192 ],
+      "name": "When chat message received"
+    },
+    {
+      "parameters": {
+        "options": {
+          "systemMessage": "## Overview\nYou are an advanced web automation agent...\n\n## Execution Plan\n1. Call `Create Browser`.\n2. Call `Load Url` using the `windowId`.\n3. Call `Query Tool`.\n4. Perform actions.\n5. Call `Terminate Tool`.\n6. Answer the user."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [ -520, -192 ],
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-4o-mini",
+          "mode": "list",
+          "cachedResultName": "gpt-4o-mini"
+        },
+        "builtInTools": {},
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.3,
+      "position": [ -960, 32 ],
+      "name": "OpenAI Chat Model",
+      "credentials": {
+        "openAiApi": {
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [ -832, 32 ],
+      "name": "Simple Memory"
+    },
+    {
+      "parameters": {
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "url": "={{ $fromAI('url', 'url of the website we are visiting', 'string') }}",
+            "profile_name": "n8ntest"
+          },
+          "schema": [
+            {
+              "id": "url",
+              "type": "string"
+            },
+            {
+              "id": "profile_name",
+              "type": "string"
+            }
+          ]
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+      "typeVersion": 2.2,
+      "position": [ -704, 32 ],
+      "name": "Create Browser"
+    },
+    {
+      "parameters": {
+        "resource": "interaction",
+        "operation": "type",
+        "sessionId": "={{ $fromAI('Session_ID', '', 'string') }}",
+        "windowId": "={{ $fromAI('Window_ID', '', 'string') }}",
+        "text": "={{ $fromAI('Text', '', 'string') }}",
+        "pressEnterKey": true,
+        "elementDescription": "={{ $fromAI('Element_Description', 'Search bar', 'string') }}"
+      },
+      "type": "n8n-nodes-base.airtopTool",
+      "typeVersion": 1,
+      "position": [ -576, 32 ],
+      "name": "Typing Tool",
+      "credentials": {
+        "airtopApi": {
+          "name": "Airtop account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "interaction",
+        "sessionId": "={{ $fromAI('Session_ID', '', 'string') }}",
+        "windowId": "={{ $fromAI('Window_ID', '', 'string') }}",
+        "elementDescription": "={{ $fromAI('Element_Description', '', 'string') }}"
+      },
+      "type": "n8n-nodes-base.airtopTool",
+      "typeVersion": 1,
+      "position": [ -448, 32 ],
+      "name": "Clicking Tool",
+      "credentials": {
+        "airtopApi": {
+          "name": "Airtop account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "extraction",
+        "operation": "query",
+        "sessionId": "={{ $fromAI('Session_ID', '', 'string') }}",
+        "windowId": "={{ $fromAI('Window_ID', '', 'string') }}",
+        "prompt": "={{ $fromAI('Prompt', '', 'string') }}"
+      },
+      "type": "n8n-nodes-base.airtopTool",
+      "typeVersion": 1,
+      "position": [ -320, 32 ],
+      "name": "Query Tool",
+      "credentials": {
+        "airtopApi": {
+          "name": "Airtop account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "window",
+        "operation": "load",
+        "sessionId": "={{ $fromAI('Session_ID', '', 'string') }}",
+        "windowId": "={{ $fromAI('Window_ID', '', 'string') }}",
+        "url": "={{ $fromAI('URL', '', 'string') }}"
+      },
+      "type": "n8n-nodes-base.airtopTool",
+      "typeVersion": 1,
+      "position": [ -192, 32 ],
+      "name": "Load Url Tool",
+      "credentials": {
+        "airtopApi": {
+          "name": "Airtop account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "terminate",
+        "sessionId": "={{ $fromAI('Session_ID', '', 'string') }}"
+      },
+      "type": "n8n-nodes-base.airtopTool",
+      "typeVersion": 1,
+      "position": [ -64, 32 ],
+      "name": "Terminate Tool",
+      "credentials": {
+        "airtopApi": {
+          "name": "Airtop account"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "@n8n/n8n-nodes-langchain.toolThink",
+      "typeVersion": 1.1,
+      "position": [ 64, 32 ],
+      "name": "Think"
+    }
+  ],
+  "connections": {},
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "availableInMCP": false
+  },
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "tags": []
+}
