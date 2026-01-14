@@ -1,4 +1,4 @@
- 🤖 n8n AI Automation Portfolio
+# 🤖 n8n AI Automation Portfolio
 
 This portfolio focuses on **practical automations** used in content creation, email management, knowledge systems, browser automation, and internal business tools.
 
@@ -269,3 +269,4 @@ You must configure your own credentials for:
 
 This project is licensed under the **MIT License**.
 See the `LICENSE` file for more details.
+
