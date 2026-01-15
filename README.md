@@ -10,7 +10,7 @@ This portfolio focuses on **practical automations** used in content creation, em
 * Building **AI agents** for decision-making and automation
 * Implementing **RAG systems** using vector databases
 * Automating **email, inventory, content, browser, and video workflows**
-* Integrating **OpenAI, Pinecone, Gmail, Google Sheets, OneDrive, LinkedIn, RunwayML, YouTube, and Airtop APIs**
+* Integrating **OpenAI, Pinecone, Gmail, Google Sheets, OneDrive, LinkedIn, RunwayML, YouTube, Airtop, and ElevenLabs APIs**
 
 ---
 
@@ -231,9 +231,9 @@ OpenAI (GPT-4o-mini), Airtop API, LangChain Agents & Memory, n8n
 
 ---
 
-### 8. AI Voice / Natural Language Email Agent ✉️🤖 **(NEW)**
+### 8. AI Voice / Natural Language Email Agent ✉️🎙️ **(NEW)**
 
-A webhook-driven AI agent that **understands natural language instructions and autonomously drafts and sends professional emails**.
+A webhook-driven AI agent that **accepts voice or natural language instructions and autonomously drafts and sends professional emails**.
 
 **Workflow**
 
@@ -241,21 +241,24 @@ A webhook-driven AI agent that **understands natural language instructions and a
 
 **Function**
 
-* Accepts structured or voice-to-text email instructions via webhook
+* Accepts **voice input converted to text using ElevenLabs**
+* Accepts structured text instructions via webhook
 * Identifies recipients
 * Drafts professional emails using AI
 * Sends emails automatically
 
 **Features**
 
+* Voice-enabled email automation via **ElevenLabs**
 * Webhook-triggered execution
 * AI Agent powered email drafting
 * Contact lookup via Google Sheets
 * Gmail-based email delivery
-* Designed for hands-free or voice-assistant-style email automation
+* Designed for hands-free, voice-assistant-style workflows
 * Modular tool-based agent architecture
 
-**Tech Stack:** OpenAI (Chat Models), Gmail API, Google Sheets, LangChain Agent Tools, n8n
+**Tech Stack:**
+OpenAI (Chat Models), **ElevenLabs (Speech-to-Text / Voice Interface)**, Gmail API, Google Sheets, LangChain Agent Tools, n8n
 
 **Setup Requirement:**
 Google Sheet containing recipient names and email addresses
@@ -282,6 +285,7 @@ You must configure your own credentials for:
 * RunwayML API (Video Generation)
 * YouTube API (Video Uploads)
 * Airtop API (Browser Automation)
+* **ElevenLabs API (Voice Input / Speech Processing)**
 
 > ⚠️ Credentials are **not included** for security reasons.
 
@@ -291,7 +295,7 @@ You must configure your own credentials for:
 
 * All workflows are modular and customizable
 * Designed for **real-world automation use cases**
-* Supports **AI agents, browser automation, content pipelines, and video publishing**
+* Supports **AI agents, browser automation, voice interfaces, content pipelines, and video publishing**
 * Can be extended with additional tools, triggers, and agent logic
 
 ---
