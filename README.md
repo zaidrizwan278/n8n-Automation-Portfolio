@@ -231,6 +231,37 @@ OpenAI (GPT-4o-mini), Airtop API, LangChain Agents & Memory, n8n
 
 ---
 
+### 8. AI Voice / Natural Language Email Agent ✉️🤖 **(NEW)**
+
+A webhook-driven AI agent that **understands natural language instructions and autonomously drafts and sends professional emails**.
+
+**Workflow**
+
+* **voice-agent.json**
+
+**Function**
+
+* Accepts structured or voice-to-text email instructions via webhook
+* Identifies recipients
+* Drafts professional emails using AI
+* Sends emails automatically
+
+**Features**
+
+* Webhook-triggered execution
+* AI Agent powered email drafting
+* Contact lookup via Google Sheets
+* Gmail-based email delivery
+* Designed for hands-free or voice-assistant-style email automation
+* Modular tool-based agent architecture
+
+**Tech Stack:** OpenAI (Chat Models), Gmail API, Google Sheets, LangChain Agent Tools, n8n
+
+**Setup Requirement:**
+Google Sheet containing recipient names and email addresses
+
+---
+
 ## 🛠️ Setup & Usage
 
 ### Import Workflows
@@ -269,4 +300,3 @@ You must configure your own credentials for:
 
 This project is licensed under the **MIT License**.
 See the `LICENSE` file for more details.
-
