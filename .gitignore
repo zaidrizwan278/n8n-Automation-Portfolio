@@ -145,6 +145,24 @@ credentials/
 credentials/*
 .vs/
 
+# n8n database & state files (ADDED)
+*.sqlite
+*.sqlite3
+*.db
+database.sqlite
+
+# n8n backups & exports (ADDED)
+.backups/
+.backups/*
+exports/
+exports/*
+
+# n8n execution data & binary storage (ADDED)
+binaryData/
+binaryData/*
+executionData/
+executionData/*
+
 # =========================
 # Airtop browser automation
 # =========================
@@ -156,3 +174,25 @@ credentials/*
 # =========================
 .n8n-data/
 .n8n-data/*
+
+# =========================
+# Security / Secrets (ADDED)
+# =========================
+*.key
+*.pem
+*.crt
+*.p12
+*.pfx
+*.secret
+*.token
+*.credentials.json
+oauth*.json
+
+# =========================
+# OS / Editor noise (ADDED)
+# =========================
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+!.vscode/extensions.json
