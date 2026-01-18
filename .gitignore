@@ -196,3 +196,17 @@ Thumbs.db
 .idea/
 .vscode/
 !.vscode/extensions.json
+
+# n8n credential exports
+*n8n-credentials*.json
+*n8n-workflow*.json
+
+# Cloud / service account credentials
+*service-account*.json
+*account*.json
+*auth*.json
+
+# Catch-all secrets
+**/*secret*
+**/*credential*
+**/*token*
